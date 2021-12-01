@@ -4,6 +4,11 @@ categories: ['Data Science', "python"]
 tags: 
 - 전처리
 - 데이터프레임
+
+toc: true
+toc_label: "My Table of Contents"
+toc_icon: "cog"
+
 ---
 
 
