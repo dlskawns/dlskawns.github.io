@@ -1,6 +1,6 @@
 ---
 title: "Dataframe 내 Column, row의 제거방법drop, iloc, loc 이용(pandas)"
-categories: ['데이터 사이언스', "python"]
+categories: ['Data Science', "python"]
 tags: 
 - 전처리
 - 데이터프레임
