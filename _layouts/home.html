@@ -2,6 +2,14 @@
 layout: archive
 ---
 
+
+<div class="jumbotron"
+  style="text-align: center; background-image:url(/assets/img/namsan.jpg); background-size: cover;">
+  <img class="author-profile-img" src="/assets/img/namjoon.png" />
+  <p class="jumbotron-heading" style="text-shadow: white;">Hi, I am {{site.author}} !</p>
+  <p class="lead" style="text-shadow: white;" id="typewriteText"></p>
+</div>
+
 <div class="col-lg-4 col-md-2">
   <ul>
   {% for category in site.categories %}
@@ -10,7 +18,6 @@ layout: archive
   </ul>
 </div>
 
-{{ content }}
 
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>
 
