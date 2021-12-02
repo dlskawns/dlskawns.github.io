@@ -103,7 +103,7 @@ analytics:
 # Site Author
 author:
   name             : "David_lee"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
+  avatar           : "/assets/img/namjoon2.png"
   bio              : "데이터 사이언스를 공부하는 데린이 블로그."
   location         : "Seoul, Republic of Korea"
   email            : "fabric_lee@naver.com"
