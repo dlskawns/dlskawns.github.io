@@ -7,6 +7,8 @@ categories: ['Data Science', 'Machine Learning']
 tags: 
 - 머신러닝
 
+use_math: true
+
 toc: true
 toc_label: "My Table of Contents"
 toc_icon: "cog"
