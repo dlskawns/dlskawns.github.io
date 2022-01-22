@@ -1,6 +1,6 @@
 ---
 
-title: 'Logistic Regression - 로지스틱 회귀, lodge 정리'
+title: 'Machine Learning - Random Forest 정리, 구성원리 파악 및 모델 작성'
 
 categories: ['Data Science', 'Machine Learning']
 
