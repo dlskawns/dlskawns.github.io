@@ -1,11 +1,11 @@
 ---
 
-title: 'Machine Learning - Random Forest 정리, 구성원리 파악 및 모델 작성
+title: 'Logistic Regression - 로지스틱 회귀, lodge 정리'
 
 categories: ['Data Science', 'Machine Learning']
 
 tags: 
-- 머신러닝, 랜덤포레스트
+- 머신러닝, 선형회귀
 
 use_math: true
 
@@ -14,6 +14,7 @@ toc_label: "My Table of Contents"
 toc_icon: "cog"
 
 ---
+
 
 ## Random Forest란?
 
