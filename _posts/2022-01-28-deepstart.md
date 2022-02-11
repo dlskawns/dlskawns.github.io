@@ -40,7 +40,7 @@ toc_icon: "cog"
 
 ### 퍼셉트론의 연산, 학습목표  
 
-![](https://images.velog.io/images/dlskawns/post/113b3364-7b25-4d4d-bc55-e2acd041f1a6/image.png)
+![](https://images.velog.io/images/dlskawns/post/12d3d73f-6843-4d49-8154-62fceabb428f/image.png)  
 
 label을 분류하거나 원하는 예측값을 찾기 위한 퍼셉트론의 학습은 그를 파악해 올바르게 분류하는 가중치 및 편향을 구하는 것.   
 
@@ -73,7 +73,7 @@ $= f[\sum(b+W_0x_0+W_1x_1+...+W_ix_i]$
  $s(z) = \frac{1}{1+e^{-x}}$  
 
 * 다중 분류: softmax함수사용 - 연산한 값을 확률로 확인이 가능하도록 하는 함수. 전체 label 중 특정 label일 확률을 파악하는 방법.  
- $s(z)_i = \frac{e^{z_j}}{\sum_{j=1}^ke^{z_j}}$  
+ $s(z)_i = \frac{e^{z_j}}{\sum_{j=1}^k e^{z_j}}$  
 
 * 회귀 문제: 일반적으로 활성화 함수를 사용하지 않는다. 예측값을 그대로 사용하면 되기 때문.  
 
