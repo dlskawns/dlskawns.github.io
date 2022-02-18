@@ -1,6 +1,6 @@
 ---
 
-title: 'Deep Learning - 딥러닝 이론 정리 3-1 (optimizer 정리)'
+title: 'Deep Learning - 딥러닝 이론 정리 5 (optimizer 정리)'
 
 categories: ['Data Science', 'Deep Learning']
 
