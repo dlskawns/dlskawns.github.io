@@ -1,6 +1,6 @@
 ---
 
-title: 'Deep Learning - 전이학습(Transfer Learning)의 미세조정(Fine Tuning) 방법 및 학습 학습이 안되는 원인분석 (feat. BN, ResNet50)'
+title: 'Deep Learning - 전이학습(Transfer Learning)의 미세조정(Fine Tuning) 방법 및 학습이 안되는 원인분석 (feat. BN, ResNet50)'
 
 categories: ['Data Science', 'Deep Learning']
 
@@ -18,10 +18,11 @@ toc_icon: "cog"
 
 tf.keras를 사용할때의 기준으로 사전학습된 ResNet50 모델을 이용한 전이학습에 대한 실습을 진행하면서 겪었던 여러가지 사례들에 대해 다뤄보고자 한다.  
 
-우선 여러가지 실습관련 내용, 그리고 다양한 리뷰들을 보면서 **'미세 조정을 위한 정답은 없다, 하지만 오답은 있다'** 라는 잠정적 결론을 가질 수 있었다.  
+우선 여러가지 실습관련 내용, 그리고 다양한 리뷰들을 보면서 **'미세 조정을 위한 정답은 없다, 하지만 오답은 있다'** 라는 잠정적 결론을 가질 수 있었다.   
+
 여기서 말하는 오답이란 미세조정의 목적인 성능의 개선이 아닌 역행, 즉 성능을 저하시키는 것을 말한다.   
 
-무엇이 문제였고, 그것을 해결하는 것부터 파악해보도록 한다.  
+무엇이 문제였고, 그것을 어떻게 해결했는지 파악해보도록 한다.  
 
 ## Learning Late와 Optimizer의 중요성  
 
