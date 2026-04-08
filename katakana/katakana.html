@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="format-detection" content="telephone=no" />
+  <title>カタカナ マスター</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      width: 100%;
+      min-height: 100%;
+    }
+    body {
+      font-family:
+        "Noto Sans KR",
+        "Noto Sans JP",
+        "Apple SD Gothic Neo",
+        "Hiragino Sans",
+        "Malgun Gothic",
+        "Yu Gothic",
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+      -webkit-text-size-adjust: 100%;
+      text-rendering: optimizeLegibility;
+    }
+  </style>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+#app{background:#000;min-height:100vh;font-family:sans-serif;color:#fff;max-width:430px;margin:0 auto;padding:16px 16px 80px}
+.neon-title{text-align:center;font-size:20px;font-weight:500;color:#0ff;text-shadow:0 0 8px #0ff;margin-bottom:16px;letter-spacing:2px}
+.tab-bar{display:flex;gap:8px;margin-bottom:16px}
+.tab-btn{flex:1;padding:10px;background:#111;border:1px solid #333;border-radius:8px;color:#888;font-size:13px;cursor:pointer}
+.tab-btn.active{background:#001a1a;border-color:#0ff;color:#0ff}
+.mode-bar{display:flex;gap:8px;margin-bottom:16px}
+.mode-btn{flex:1;padding:9px;background:#111;border:1px solid #333;border-radius:8px;color:#aaa;font-size:12px;cursor:pointer}
+.mode-btn.active{background:#1a0030;border-color:#c0f;color:#c0f}
+.flash-card{background:#0a0a0a;border:1px solid #222;border-radius:16px;min-height:220px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:16px;cursor:pointer;position:relative}
+.flash-card:active{transform:scale(.98)}
+.kana-char{font-size:96px;line-height:1;margin-bottom:8px;transition:all .3s;border-radius:8px}
+.kana-reading{font-size:28px;letter-spacing:4px;transition:all .3s;border-radius:6px}
+.fc-meta{position:absolute;top:12px;left:16px;font-size:11px;color:#444}
+.fc-idx{position:absolute;top:12px;right:16px;font-size:11px;color:#444}
+.progress-bar{height:3px;background:#111;border-radius:2px;margin-bottom:12px;overflow:hidden}
+.progress-fill{height:100%;border-radius:2px;transition:width .3s}
+.flash-controls{display:flex;gap:10px;margin-bottom:10px}
+.ctrl-btn{flex:1;padding:12px;background:#111;border:1px solid #333;border-radius:10px;color:#aaa;font-size:13px;cursor:pointer}
+.ctrl-btn:active{transform:scale(.97)}
+.ctrl-btn.go{background:#001a00;border-color:#0f0;color:#0f0;text-shadow:0 0 6px #0f0}
+.ctrl-btn.warn{background:#1a0a00;border-color:#f80;color:#f80}
+.toggle-row{display:flex;gap:8px;margin-bottom:8px;align-items:center;justify-content:center;flex-wrap:wrap}
+.tlabel{font-size:12px;color:#666;width:100%;text-align:center;margin-bottom:4px}
+.vis-btn{padding:7px 14px;background:#111;border:1px solid #333;border-radius:8px;color:#888;font-size:12px;cursor:pointer}
+.vis-btn.on{background:#001a1a;border-color:#0cf;color:#0cf}
+.gsec{margin-bottom:20px}
+.gsec-title{font-size:13px;color:#555;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid #222;letter-spacing:2px}
+.kana-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.kana-cell{background:#0a0a0a;border:1px solid #222;border-radius:8px;padding:10px 4px;text-align:center;cursor:pointer}
+.kana-cell:active{transform:scale(.95)}
+.kana-cell .ch{font-size:24px;display:block}
+.kana-cell .ro{font-size:10px;color:#555;display:block;margin-top:2px;transition:opacity .2s}
+.kana-cell.rh .ro{opacity:0}
+.theme-scroll{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:12px;scrollbar-width:none}
+.theme-scroll::-webkit-scrollbar{display:none}
+.theme-btn{flex-shrink:0;padding:8px 16px;background:#111;border:1px solid #333;border-radius:20px;color:#888;font-size:12px;cursor:pointer;white-space:nowrap}
+
+/* 단어 플래시카드 */
+.word-flash-card{background:#0a0a0a;border:1px solid #222;border-radius:16px;min-height:260px;display:flex;flex-direction:column;align-items:center;justify-content:center;margin-bottom:14px;position:relative;padding:20px;user-select:none}
+.wf-theme{position:absolute;top:12px;left:16px;font-size:11px;color:#444}
+.wf-idx{position:absolute;top:12px;right:16px;font-size:11px;color:#444}
+.wf-kana{font-size:52px;line-height:1.2;margin-bottom:10px;text-align:center;border-radius:8px;transition:all .2s}
+.wf-rom{font-size:18px;letter-spacing:2px;margin-bottom:8px;border-radius:6px;transition:all .2s}
+.wf-eng{font-size:16px;margin-bottom:6px;border-radius:6px;transition:all .2s}
+.wf-mean{font-size:22px;border-radius:6px;transition:all .2s}
+.wf-progress{height:3px;background:#111;border-radius:2px;margin-bottom:12px;overflow:hidden}
+.wf-fill{height:100%;border-radius:2px;transition:width .3s}
+.word-controls{display:flex;gap:10px;margin-bottom:10px}
+.wctrl{flex:1;padding:12px;background:#111;border:1px solid #333;border-radius:10px;color:#aaa;font-size:13px;cursor:pointer}
+.wctrl:active{transform:scale(.97)}
+.wctrl.go{background:#001a00;border-color:#0f0;color:#0f0;text-shadow:0 0 6px #0f0}
+.wctrl.warn{background:#1a0a00;border-color:#f80;color:#f80}
+.wctrl.purple{background:#0d001a;border-color:#c0f;color:#c0f}
+
+/* 누르고 있는 동안 가리기 버튼 */
+.hold-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px}
+.hold-btn{
+  padding:14px 8px;
+  background:#111;border:1px solid #333;border-radius:10px;
+  color:#888;font-size:12px;cursor:pointer;
+  text-align:center;line-height:1.4;
+  transition:all .15s;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:manipulation;
+  user-select:none;
+}
+.hold-btn .hb-sub{font-size:10px;color:#555;display:block;margin-top:3px}
+.hold-btn:active,.hold-btn.holding,.hold-btn.on{background:#1a0030;border-color:#c0f;color:#c0f;text-shadow:0 0 6px #c0f}
+.hold-btn:active .hb-sub,.hold-btn.holding .hb-sub,.hold-btn.on .hb-sub{color:#906}
+.hold-hint{text-align:center;font-size:11px;color:#333;margin-bottom:10px}
+</style>
+</head>
+<body>
+<div id="app">
+<div class="neon-title">カタカナ　マスター</div>
+<div class="tab-bar">
+  <button class="tab-btn active" id="tb0" onclick="switchTab(0)">플래시카드</button>
+  <button class="tab-btn" id="tb1" onclick="switchTab(1)">전체 목록</button>
+  <button class="tab-btn" id="tb2" onclick="switchTab(2)">단어 연습</button>
+</div>
+
+<!-- 플래시카드 -->
+<div id="tab0">
+  <div class="mode-bar">
+    <button class="mode-btn active" id="ms" onclick="setMode('seq')">순서대로</button>
+    <button class="mode-btn" id="mr" onclick="setMode('rand')">랜덤</button>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="pf" style="width:0%;background:#0ff;box-shadow:0 0 6px #0ff"></div></div>
+  <div class="flash-card" onclick="toggleReveal()">
+    <span class="fc-meta" id="fcg"></span>
+    <span class="fc-idx" id="fci"></span>
+    <div class="kana-char" id="fcc"></div>
+    <div class="kana-reading" id="fcr"></div>
+  </div>
+  <div class="toggle-row">
+    <span class="tlabel">카드 표시 설정</span>
+    <button class="vis-btn on" id="vc" onclick="toggleVis('c')">글자</button>
+    <button class="vis-btn on" id="vr" onclick="toggleVis('r')">읽기</button>
+  </div>
+  <div class="flash-controls">
+    <button class="ctrl-btn" onclick="prevCard()">◀ 이전</button>
+    <button class="ctrl-btn go" id="ab" onclick="toggleAuto()">▶ 자동</button>
+    <button class="ctrl-btn" onclick="nextCard()">다음 ▶</button>
+  </div>
+  <div class="flash-controls">
+    <button class="ctrl-btn warn" onclick="resetCards()">처음으로</button>
+    <button class="ctrl-btn" onclick="toggleReveal()" style="flex:2">힌트 보기/가리기</button>
+  </div>
+</div>
+
+<!-- 목록 -->
+<div id="tab1" style="display:none">
+  <div class="toggle-row" style="margin-bottom:12px">
+    <button class="vis-btn on" id="lrb" onclick="toggleListRom()">읽기 표시</button>
+    <button class="vis-btn" onclick="hlRandom()">랜덤 하이라이트</button>
+  </div>
+  <div id="klc"></div>
+</div>
+
+<!-- 단어 연습 -->
+<div id="tab2" style="display:none">
+  <div class="theme-scroll" id="tscroll"></div>
+
+  <div class="wf-progress"><div class="wf-fill" id="wfill" style="width:0%"></div></div>
+
+  <div class="word-flash-card">
+    <span class="wf-theme" id="wftheme"></span>
+    <span class="wf-idx" id="wfidx"></span>
+    <div class="wf-kana" id="wfkana"></div>
+    <div class="wf-rom" id="wfrom"></div>
+    <div class="wf-eng" id="wfeng"></div>
+    <div class="wf-mean" id="wfmean"></div>
+  </div>
+
+  <div class="hold-hint">버튼을 켜면 해당 항목이 숨겨집니다 → 전부 끄면 기본값으로 전체 공개</div>
+  <div class="hold-row">
+    <button class="hold-btn" id="hb0" onclick="toggleWordHide('kana')">
+      カタカナ 숨기기
+      <span class="hb-sub">가타카나 단어 숨김</span>
+    </button>
+    <button class="hold-btn" id="hb1" onclick="toggleWordHide('romaji')">
+      로마자 숨기기
+      <span class="hb-sub">영문 발음 숨김</span>
+    </button>
+    <button class="hold-btn" id="hb2" onclick="toggleWordHide('english')">
+      영어 숨기기
+      <span class="hb-sub">영어 표기 숨김</span>
+    </button>
+    <button class="hold-btn" id="hb3" onclick="toggleWordHide('meaning')">
+      한글 뜻 숨기기
+      <span class="hb-sub">한글 뜻 숨김</span>
+    </button>
+  </div>
+
+  <div class="word-controls">
+    <button class="wctrl" onclick="wPrev()">◀ 이전</button>
+    <button class="wctrl go" id="wab" onclick="toggleWordAuto()">▶ 자동</button>
+    <button class="wctrl" onclick="wNext()">다음 ▶</button>
+  </div>
+  <div class="word-controls">
+    <button class="wctrl warn" onclick="resetWords()">처음으로</button>
+    <button class="wctrl purple" onclick="reshuffleWords()">🔀 다시 섞기</button>
+  </div>
+</div>
+</div>
+
+<script>
+var KANA_DATA=[
+  {g:'ア行',i:[{k:'ア',r:'a'},{k:'イ',r:'i'},{k:'ウ',r:'u'},{k:'エ',r:'e'},{k:'オ',r:'o'}]},
+  {g:'カ行',i:[{k:'カ',r:'ka'},{k:'キ',r:'ki'},{k:'ク',r:'ku'},{k:'ケ',r:'ke'},{k:'コ',r:'ko'}]},
+  {g:'サ行',i:[{k:'サ',r:'sa'},{k:'シ',r:'shi'},{k:'ス',r:'su'},{k:'セ',r:'se'},{k:'ソ',r:'so'}]},
+  {g:'タ行',i:[{k:'タ',r:'ta'},{k:'チ',r:'chi'},{k:'ツ',r:'tsu'},{k:'テ',r:'te'},{k:'ト',r:'to'}]},
+  {g:'ナ行',i:[{k:'ナ',r:'na'},{k:'ニ',r:'ni'},{k:'ヌ',r:'nu'},{k:'ネ',r:'ne'},{k:'ノ',r:'no'}]},
+  {g:'ハ行',i:[{k:'ハ',r:'ha'},{k:'ヒ',r:'hi'},{k:'フ',r:'fu'},{k:'ヘ',r:'he'},{k:'ホ',r:'ho'}]},
+  {g:'マ行',i:[{k:'マ',r:'ma'},{k:'ミ',r:'mi'},{k:'ム',r:'mu'},{k:'メ',r:'me'},{k:'モ',r:'mo'}]},
+  {g:'ヤ行',i:[{k:'ヤ',r:'ya'},{k:'ユ',r:'yu'},{k:'ヨ',r:'yo'}]},
+  {g:'ラ行',i:[{k:'ラ',r:'ra'},{k:'リ',r:'ri'},{k:'ル',r:'ru'},{k:'レ',r:'re'},{k:'ロ',r:'ro'}]},
+  {g:'ワ行・ン',i:[{k:'ワ',r:'wa'},{k:'ヲ',r:'wo'},{k:'ン',r:'n'}]},
+  {g:'濁音・半濁音',i:[
+    {k:'ガ',r:'ga'},{k:'ギ',r:'gi'},{k:'グ',r:'gu'},{k:'ゲ',r:'ge'},{k:'ゴ',r:'go'},
+    {k:'ザ',r:'za'},{k:'ジ',r:'ji'},{k:'ズ',r:'zu'},{k:'ゼ',r:'ze'},{k:'ゾ',r:'zo'},
+    {k:'ダ',r:'da'},{k:'ヂ',r:'di'},{k:'ヅ',r:'du'},{k:'デ',r:'de'},{k:'ド',r:'do'},
+    {k:'バ',r:'ba'},{k:'ビ',r:'bi'},{k:'ブ',r:'bu'},{k:'ベ',r:'be'},{k:'ボ',r:'bo'},
+    {k:'パ',r:'pa'},{k:'ピ',r:'pi'},{k:'プ',r:'pu'},{k:'ペ',r:'pe'},{k:'ポ',r:'po'}
+  ]}
+];
+var THEMES={
+  '음식':{label:'음식 🍜',color:'#f80',words:[
+    {k:'ピザ',r:'piza',m:'피자',o:'pizza'},{k:'パスタ',r:'pasuta',m:'파스타',o:'pasta'},
+    {k:'バター',r:'bataa',m:'버터',o:'butter'},{k:'チーズ',r:'chiizu',m:'치즈',o:'cheese'},
+    {k:'ケーキ',r:'keeki',m:'케이크',o:'cake'},{k:'クッキー',r:'kukkii',m:'쿠키',o:'cookie'},
+    {k:'コーヒー',r:'koohii',m:'커피',o:'coffee'},{k:'ジュース',r:'juusu',m:'주스',o:'juice'},
+    {k:'ソース',r:'soosu',m:'소스',o:'sauce'},{k:'スープ',r:'suupu',m:'수프',o:'soup'},
+    {k:'サラダ',r:'sarada',m:'샐러드',o:'salad'},{k:'カレー',r:'karee',m:'카레',o:'curry'},
+    {k:'ステーキ',r:'suteeki',m:'스테이크',o:'steak'},{k:'バーガー',r:'baagaa',m:'버거',o:'burger'},
+    {k:'ヨーグルト',r:'yooguruto',m:'요거트',o:'yogurt'},{k:'アイスクリーム',r:'aisukuriimu',m:'아이스크림',o:'ice cream'},
+    {k:'チョコレート',r:'chokoreeto',m:'초콜릿',o:'chocolate'},{k:'キャラメル',r:'kyarameru',m:'캐러멜',o:'caramel'},
+    {k:'マヨネーズ',r:'mayoneezu',m:'마요네즈',o:'mayonnaise'},{k:'クリーム',r:'kuriimu',m:'크림',o:'cream'},
+    {k:'オレンジ',r:'orenji',m:'오렌지',o:'orange'},{k:'レモン',r:'remon',m:'레몬',o:'lemon'},
+    {k:'バナナ',r:'banana',m:'바나나',o:'banana'},{k:'トマト',r:'tomato',m:'토마토',o:'tomato'},{k:'ミルク',r:'miruku',m:'우유',o:'milk'},
+    {k:'グミ',r:'gumi',m:'구미',o:'gummy'},{k:'ジャム',r:'jamu',m:'잼',o:'jam'},
+    {k:'プリン',r:'purin',m:'푸딩',o:'pudding'},{k:'ゼリー',r:'zerii',m:'젤리',o:'jelly'},
+    {k:'マフィン',r:'mafin',m:'머핀',o:'muffin'},{k:'ドーナツ',r:'doonatsu',m:'도넛',o:'donut'},
+    {k:'クラッカー',r:'kurakkaa',m:'크래커',o:'cracker'},{k:'ピクルス',r:'pikurusu',m:'피클',o:'pickles'},
+    {k:'バジル',r:'bajiru',m:'바질',o:'basil'},{k:'セロリ',r:'serori',m:'셀러리',o:'celery'}
+  ]},
+  'IT':{label:'IT 💻',color:'#0ff',words:[
+    {k:'コンピューター',r:'konpyuutaa',m:'컴퓨터',o:'computer'},{k:'インターネット',r:'intaanetto',m:'인터넷',o:'internet'},
+    {k:'スマートフォン',r:'sumaatofon',m:'스마트폰',o:'smartphone'},{k:'キーボード',r:'kiiboodo',m:'키보드',o:'keyboard'},
+    {k:'マウス',r:'mausu',m:'마우스',o:'mouse'},{k:'プリンター',r:'purintaa',m:'프린터',o:'printer'},
+    {k:'サーバー',r:'saabaa',m:'서버',o:'server'},{k:'クラウド',r:'kuraudo',m:'클라우드',o:'cloud'},
+    {k:'ネットワーク',r:'nettowaaku',m:'네트워크',o:'network'},{k:'データ',r:'deeta',m:'데이터',o:'data'},
+    {k:'ファイル',r:'fairu',m:'파일',o:'file'},{k:'システム',r:'shisutemu',m:'시스템',o:'system'},
+    {k:'アプリ',r:'apuri',m:'앱',o:'app'},{k:'ウイルス',r:'uirusu',m:'바이러스',o:'virus'},
+    {k:'ロボット',r:'robotto',m:'로봇',o:'robot'},{k:'カメラ',r:'kamera',m:'카메라',o:'camera'},
+    {k:'タブレット',r:'taburetto',m:'태블릿',o:'tablet'},{k:'ゲーム',r:'geemu',m:'게임',o:'game'},
+    {k:'プログラム',r:'puroguramu',m:'프로그램',o:'program'},{k:'パスワード',r:'pasuwaado',m:'비밀번호',o:'password'},
+    {k:'ダウンロード',r:'daunroodo',m:'다운로드',o:'download'},{k:'アップデート',r:'appudeeto',m:'업데이트',o:'update'},
+    {k:'メモリ',r:'memori',m:'메모리',o:'memory'},{k:'バッテリー',r:'batterii',m:'배터리',o:'battery'},{k:'スキャン',r:'sukyan',m:'스캔',o:'scan'},
+    {k:'デバイス',r:'debaisu',m:'디바이스',o:'device'},{k:'センサ',r:'sensa',m:'센서',o:'sensor'},
+    {k:'モニタ',r:'monita',m:'모니터',o:'monitor'},{k:'プリンタ',r:'purinta',m:'프린터',o:'printer'},
+    {k:'スキャナ',r:'sukyana',m:'스캐너',o:'scanner'},{k:'アクセス',r:'akusesu',m:'접근',o:'access'},
+    {k:'コマンド',r:'komando',m:'명령',o:'command'},{k:'ドメイン',r:'domein',m:'도메인',o:'domain'},
+    {k:'ビット',r:'bitto',m:'비트',o:'bit'},{k:'バイト',r:'baito',m:'바이트',o:'byte'}
+  ]},
+  '스포츠':{label:'스포츠 ⚽',color:'#0f0',words:[
+    {k:'サッカー',r:'sakkaa',m:'축구',o:'soccer'},{k:'テニス',r:'tenisu',m:'테니스',o:'tennis'},
+    {k:'ゴルフ',r:'gorufu',m:'골프',o:'golf'},{k:'ラグビー',r:'ragubii',m:'럭비',o:'rugby'},
+    {k:'バスケットボール',r:'basukettoboru',m:'농구',o:'basketball'},{k:'バレーボール',r:'bareebooru',m:'배구',o:'volleyball'},
+    {k:'スイミング',r:'suimingu',m:'수영',o:'swimming'},{k:'ランニング',r:'ranningu',m:'러닝',o:'running'},
+    {k:'サイクリング',r:'saikuringu',m:'사이클링',o:'cycling'},{k:'チーム',r:'chiimu',m:'팀',o:'team'},
+    {k:'ゴール',r:'gooru',m:'골',o:'goal'},{k:'スコア',r:'sukoa',m:'스코어',o:'score'},
+    {k:'コーチ',r:'koochi',m:'코치',o:'coach'},{k:'チャンピオン',r:'chanpion',m:'챔피언',o:'champion'},
+    {k:'スタジアム',r:'sutajiamu',m:'경기장',o:'stadium'},{k:'トレーニング',r:'toreeningu',m:'트레이닝',o:'training'},
+    {k:'ユニフォーム',r:'yunifoomu',m:'유니폼',o:'uniform'},{k:'マラソン',r:'marason',m:'마라톤',o:'marathon'},
+    {k:'ボクシング',r:'bokushingu',m:'복싱',o:'boxing'},{k:'スキー',r:'sukii',m:'스키',o:'ski'},
+    {k:'サーフィン',r:'saafin',m:'서핑',o:'surfing'},{k:'ヨガ',r:'yoga',m:'요가',o:'yoga'},
+    {k:'キャプテン',r:'kyaputen',m:'주장',o:'captain'},{k:'パワー',r:'pawaa',m:'파워',o:'power'},{k:'スピード',r:'supiido',m:'스피드',o:'speed'},
+    {k:'ラケット',r:'raketto',m:'라켓',o:'racket'},{k:'ドリブル',r:'doriburu',m:'드리블',o:'dribble'},
+    {k:'ダンク',r:'danku',m:'덩크',o:'dunk'},{k:'リング',r:'ringu',m:'링',o:'ring'},
+    {k:'メダル',r:'medaru',m:'메달',o:'medal'},{k:'ジム',r:'jimu',m:'체육관',o:'gym'},
+    {k:'ピッチ',r:'picchi',m:'피치',o:'pitch'},{k:'タックル',r:'takkuru',m:'태클',o:'tackle'},
+    {k:'レスリング',r:'resuringu',m:'레슬링',o:'wrestling'},{k:'スプリント',r:'supurinto',m:'스프린트',o:'sprint'}
+  ]},
+  '음악':{label:'음악 🎵',color:'#f0f',words:[
+    {k:'ピアノ',r:'piano',m:'피아노',o:'piano'},{k:'ギター',r:'gitaa',m:'기타',o:'guitar'},
+    {k:'バイオリン',r:'baiorin',m:'바이올린',o:'violin'},{k:'トランペット',r:'toranpetto',m:'트럼펫',o:'trumpet'},
+    {k:'ドラム',r:'doramu',m:'드럼',o:'drum'},{k:'ベース',r:'beesu',m:'베이스',o:'bass'},
+    {k:'コンサート',r:'konsaato',m:'콘서트',o:'concert'},{k:'バンド',r:'bando',m:'밴드',o:'band'},
+    {k:'メロディー',r:'merodii',m:'멜로디',o:'melody'},{k:'リズム',r:'rizumu',m:'리듬',o:'rhythm'},
+    {k:'スタジオ',r:'sutajio',m:'스튜디오',o:'studio'},{k:'アルバム',r:'arubamu',m:'앨범',o:'album'},
+    {k:'ボリューム',r:'boryuumu',m:'볼륨',o:'volume'},{k:'ラジオ',r:'rajio',m:'라디오',o:'radio'},
+    {k:'マイク',r:'maiku',m:'마이크',o:'microphone'},{k:'テレビ',r:'terebi',m:'텔레비전',o:'television'},
+    {k:'ポップ',r:'poppu',m:'팝',o:'pop'},{k:'ロック',r:'rokku',m:'록',o:'rock'},
+    {k:'ジャズ',r:'jazu',m:'재즈',o:'jazz'},{k:'クラシック',r:'kurashikku',m:'클래식',o:'classic'},
+    {k:'ライブ',r:'raibu',m:'라이브',o:'live'},{k:'フェスティバル',r:'fesutibaru',m:'페스티벌',o:'festival'},
+    {k:'チケット',r:'chiketto',m:'티켓',o:'ticket'},{k:'シンガー',r:'shingaa',m:'싱어',o:'singer'},{k:'ミュージック',r:'myuujikku',m:'뮤직',o:'music'},
+    {k:'テンポ',r:'tenpo',m:'템포',o:'tempo'},{k:'リミックス',r:'rimikkusu',m:'리믹스',o:'remix'},
+    {k:'アカペラ',r:'akapera',m:'아카펠라',o:'a cappella'},{k:'リリック',r:'ririkku',m:'가사',o:'lyric'},
+    {k:'トラック',r:'torakku',m:'트랙',o:'track'},{k:'ミキサ',r:'mikisa',m:'믹서',o:'mixer'},
+    {k:'サビ',r:'sabi',m:'후렴',o:'hook'},{k:'オペラ',r:'opera',m:'오페라',o:'opera'},
+    {k:'セッション',r:'sesshon',m:'세션',o:'session'},{k:'クラブ',r:'kurabu',m:'클럽',o:'club'}
+  ]},
+  '패션':{label:'패션 👗',color:'#ff0',words:[
+    {k:'シャツ',r:'shatsu',m:'셔츠',o:'shirt'},{k:'ドレス',r:'doresu',m:'드레스',o:'dress'},
+    {k:'ジャケット',r:'jaketto',m:'재킷',o:'jacket'},{k:'コート',r:'kooto',m:'코트',o:'coat'},
+    {k:'ジーンズ',r:'jiinzu',m:'청바지',o:'jeans'},{k:'ブーツ',r:'buutsu',m:'부츠',o:'boots'},
+    {k:'バッグ',r:'baggu',m:'가방',o:'bag'},{k:'モデル',r:'moderu',m:'모델',o:'model'},
+    {k:'スタイル',r:'sutairu',m:'스타일',o:'style'},{k:'ブランド',r:'burando',m:'브랜드',o:'brand'},
+    {k:'デザイン',r:'dezain',m:'디자인',o:'design'},{k:'レザー',r:'rezaa',m:'가죽',o:'leather'},
+    {k:'コットン',r:'kotton',m:'면',o:'cotton'},{k:'シルク',r:'shiruku',m:'실크',o:'silk'},
+    {k:'デニム',r:'denimu',m:'데님',o:'denim'},{k:'リボン',r:'ribon',m:'리본',o:'ribbon'},
+    {k:'レース',r:'reesu',m:'레이스',o:'lace'},{k:'ニット',r:'nitto',m:'니트',o:'knit'},
+    {k:'カラー',r:'karaa',m:'컬러',o:'color'},{k:'サイズ',r:'saizu',m:'사이즈',o:'size'},
+    {k:'アクセサリー',r:'akusesarii',m:'액세서리',o:'accessory'},{k:'スカーフ',r:'sukaafu',m:'스카프',o:'scarf'},
+    {k:'ベルト',r:'beruto',m:'벨트',o:'belt'},{k:'ヒール',r:'hiiru',m:'힐',o:'heel'},{k:'グローブ',r:'guroobu',m:'장갑',o:'glove'},
+    {k:'パンツ',r:'pantsu',m:'바지',o:'pants'},{k:'ブラウス',r:'burausu',m:'블라우스',o:'blouse'},
+    {k:'リュック',r:'ryukku',m:'백팩',o:'rucksack'},{k:'メイク',r:'meiku',m:'메이크업',o:'makeup'},
+    {k:'ネイル',r:'neiru',m:'네일',o:'nail'},{k:'マスク',r:'masuku',m:'마스크',o:'mask'},
+    {k:'ソックス',r:'sokkusu',m:'양말',o:'socks'},{k:'ボタン',r:'botan',m:'단추',o:'button'},
+    {k:'チェック',r:'chekku',m:'체크무늬',o:'check pattern'},{k:'ベスト',r:'besuto',m:'베스트',o:'vest'}
+  ]},
+  '여행':{label:'여행 ✈️',color:'#08f',words:[
+    {k:'ホテル',r:'hoteru',m:'호텔',o:'hotel'},{k:'レストラン',r:'resutoran',m:'레스토랑',o:'restaurant'},
+    {k:'カフェ',r:'kafe',m:'카페',o:'cafe'},{k:'タクシー',r:'takushii',m:'택시',o:'taxi'},
+    {k:'バス',r:'basu',m:'버스',o:'bus'},{k:'パリ',r:'pari',m:'파리',o:'Paris'},
+    {k:'ロンドン',r:'rondon',m:'런던',o:'London'},{k:'ニューヨーク',r:'nyuuyooku',m:'뉴욕',o:'New York'},
+    {k:'ベルリン',r:'berurin',m:'베를린',o:'Berlin'},{k:'ローマ',r:'rooma',m:'로마',o:'Rome'},
+    {k:'タワー',r:'tawaa',m:'타워',o:'tower'},{k:'マーケット',r:'maaketto',m:'시장',o:'market'},
+    {k:'パスポート',r:'pasupooto',m:'여권',o:'passport'},{k:'スーツケース',r:'suutsukeesu',m:'여행가방',o:'suitcase'},
+    {k:'ツアー',r:'tsuaa',m:'투어',o:'tour'},{k:'ガイド',r:'gaido',m:'가이드',o:'guide'},
+    {k:'エアポート',r:'eaapooto',m:'공항',o:'airport'},{k:'フライト',r:'furaito',m:'항공편',o:'flight'},
+    {k:'ビザ',r:'biza',m:'비자',o:'visa'},{k:'チェックイン',r:'chekku-in',m:'체크인',o:'check-in'},
+    {k:'リゾート',r:'rizooto',m:'리조트',o:'resort'},{k:'マップ',r:'mappu',m:'지도',o:'map'},
+    {k:'カルチャー',r:'karuchaa',m:'문화',o:'culture'},{k:'アドベンチャー',r:'adobenchaa',m:'어드벤처',o:'adventure'},{k:'シドニー',r:'shidonii',m:'시드니',o:'Sydney'},
+    {k:'キャンプ',r:'kyanpu',m:'캠프',o:'camp'},{k:'ビル',r:'biru',m:'빌딩',o:'building'},
+    {k:'プラン',r:'puran',m:'계획',o:'plan'},{k:'ラウンジ',r:'raunji',m:'라운지',o:'lounge'},
+    {k:'ショップ',r:'shoppu',m:'상점',o:'shop'},{k:'サイン',r:'sain',m:'사인',o:'sign'},
+    {k:'エリア',r:'eria',m:'구역',o:'area'},{k:'タウン',r:'taun',m:'마을',o:'town'},
+    {k:'バンク',r:'banku',m:'은행',o:'bank'},{k:'ロッジ',r:'rojji',m:'산장',o:'lodge'}
+  ]},
+  '동물':{label:'동물 🐾',color:'#0f8',words:[
+    {k:'ライオン',r:'raion',m:'사자',o:'lion'},{k:'タイガー',r:'taigaa',m:'호랑이',o:'tiger'},
+    {k:'パンダ',r:'panda',m:'판다',o:'panda'},{k:'コアラ',r:'koara',m:'코알라',o:'koala'},
+    {k:'ペンギン',r:'pengin',m:'펭귄',o:'penguin'},{k:'ドルフィン',r:'dorufin',m:'돌고래',o:'dolphin'},
+    {k:'ラビット',r:'rabitto',m:'토끼',o:'rabbit'},{k:'ハムスター',r:'hamusutaa',m:'햄스터',o:'hamster'},
+    {k:'ゴリラ',r:'gorira',m:'고릴라',o:'gorilla'},{k:'キリン',r:'kirin',m:'기린',o:'giraffe'},
+    {k:'チーター',r:'chiitaa',m:'치타',o:'cheetah'},{k:'カンガルー',r:'kangaruu',m:'캥거루',o:'kangaroo'},
+    {k:'フラミンゴ',r:'furamingo',m:'플라밍고',o:'flamingo'},{k:'アルパカ',r:'arupaka',m:'알파카',o:'alpaca'},
+    {k:'カメレオン',r:'kamereon',m:'카멜레온',o:'chameleon'},{k:'オウム',r:'oumu',m:'앵무새',o:'parrot'},
+    {k:'ジャガー',r:'jagaa',m:'재규어',o:'jaguar'},{k:'ピューマ',r:'pyuuma',m:'퓨마',o:'puma'},
+    {k:'ビーバー',r:'biibaa',m:'비버',o:'beaver'},{k:'クジラ',r:'kujira',m:'고래',o:'whale'},
+    {k:'サメ',r:'same',m:'상어',o:'shark'},{k:'ペリカン',r:'perikan',m:'펠리컨',o:'pelican'},
+    {k:'イグアナ',r:'iguana',m:'이구아나',o:'iguana'},{k:'ヒョウ',r:'hyou',m:'표범',o:'leopard'},{k:'ゾウ',r:'zou',m:'코끼리',o:'elephant'},
+    {k:'オルカ',r:'oruka',m:'범고래',o:'orca'},{k:'カラス',r:'karasu',m:'까마귀',o:'crow'},
+    {k:'カモメ',r:'kamome',m:'갈매기',o:'seagull'},{k:'リス',r:'risu',m:'다람쥐',o:'squirrel'},
+    {k:'モグラ',r:'mogura',m:'두더지',o:'mole'},{k:'ハリネズミ',r:'harinezumi',m:'고슴도치',o:'hedgehog'},
+    {k:'フクロウ',r:'fukurou',m:'부엉이',o:'owl'},{k:'トカゲ',r:'tokage',m:'도마뱀',o:'lizard'},
+    {k:'カピバラ',r:'kapibara',m:'카피바라',o:'capybara'},{k:'バク',r:'baku',m:'맥',o:'tapir'}
+  ]},
+  '일상':{label:'일상 🏠',color:'#fa0',words:[
+    {k:'テレビ',r:'terebi',m:'텔레비전',o:'television'},{k:'ソファ',r:'sofa',m:'소파',o:'sofa'},
+    {k:'カーテン',r:'kaaten',m:'커튼',o:'curtain'},{k:'テーブル',r:'teeaburu',m:'테이블',o:'table'},
+    {k:'ランプ',r:'rampu',m:'램프',o:'lamp'},{k:'カレンダー',r:'karendaa',m:'달력',o:'calendar'},
+    {k:'ノート',r:'nooto',m:'노트',o:'note'},{k:'ペン',r:'pen',m:'펜',o:'pen'},
+    {k:'タオル',r:'taoru',m:'타올',o:'towel'},{k:'シャンプー',r:'shanpuu',m:'샴푸',o:'shampoo'},
+    {k:'シャワー',r:'shawaa',m:'샤워',o:'shower'},{k:'ベッド',r:'beddo',m:'침대',o:'bed'},
+    {k:'クッション',r:'kusshon',m:'쿠션',o:'cushion'},{k:'ポスター',r:'posutaa',m:'포스터',o:'poster'},
+    {k:'エアコン',r:'eakon',m:'에어컨',o:'air conditioner'},{k:'アイロン',r:'airon',m:'다리미',o:'iron'},
+    {k:'レンジ',r:'renji',m:'전자레인지',o:'microwave'},{k:'ブラシ',r:'burashi',m:'브러시',o:'brush'},
+    {k:'ミラー',r:'miraa',m:'거울',o:'mirror'},{k:'スリッパ',r:'surippa',m:'슬리퍼',o:'slippers'},
+    {k:'バスケット',r:'basuketto',m:'바구니',o:'basket'},{k:'ボトル',r:'botoru',m:'병',o:'bottle'},
+    {k:'リモコン',r:'rimokon',m:'리모컨',o:'remote control'},{k:'トースター',r:'toosutaa',m:'토스터',o:'toaster'},{k:'カップ',r:'kappu',m:'컵',o:'cup'},
+    {k:'バケツ',r:'baketsu',m:'양동이',o:'bucket'},{k:'コップ',r:'koppu',m:'컵잔',o:'glass'},
+    {k:'フォーク',r:'fooku',m:'포크',o:'fork'},{k:'ナイフ',r:'naifu',m:'나이프',o:'knife'},
+    {k:'タンス',r:'tansu',m:'서랍장',o:'dresser'},{k:'クレヨン',r:'kureyon',m:'크레용',o:'crayon'},
+    {k:'ボックス',r:'bokkusu',m:'상자',o:'box'},{k:'グラス',r:'gurasu',m:'유리잔',o:'glass cup'},
+    {k:'ポット',r:'potto',m:'주전자',o:'pot'},{k:'マスク',r:'masuku',m:'마스크',o:'mask'}
+  ]}
+};
+
+var COLORS=['#0ff','#f0f','#0f0','#ff0','#f80','#08f'];
+var allKana=[];
+KANA_DATA.forEach(function(g){g.i.forEach(function(item){allKana.push({k:item.k,r:item.r,group:g.g})})});
+
+// ===== 플래시카드 =====
+var fc={mode:'seq',idx:0,order:[],auto:false,timer:null,vc:true,vr:true};
+function buildOrder(){fc.order=[];for(var i=0;i<allKana.length;i++)fc.order.push(i);if(fc.mode==='rand')fc.order.sort(function(){return Math.random()-0.5})}
+function renderFlash(){
+  var i=fc.order[fc.idx],kana=allKana[i],col=COLORS[i%COLORS.length];
+  var cc=document.getElementById('fcc'),cr=document.getElementById('fcr');
+  cc.textContent=kana.k;cr.textContent=kana.r.toUpperCase();
+  document.getElementById('fcg').textContent=kana.group;
+  document.getElementById('fci').textContent=(fc.idx+1)+'/'+allKana.length;
+  document.getElementById('pf').style.width=Math.round((fc.idx+1)/allKana.length*100)+'%';
+  if(fc.vc){cc.style.color=col;cc.style.textShadow='0 0 20px '+col+',0 0 40px '+col+'66';cc.style.background='transparent';cc.style.padding='0';}
+  else{cc.style.color='transparent';cc.style.textShadow='none';cc.style.background='#1a1a1a';cc.style.padding='8px 24px';}
+  if(fc.vr){cr.style.color='#f0f';cr.style.textShadow='0 0 10px #f0f';cr.style.background='transparent';cr.style.padding='0';}
+  else{cr.style.color='transparent';cr.style.textShadow='none';cr.style.background='#1a1a1a';cr.style.padding='4px 16px';}
+}
+function nextCard(){fc.idx=(fc.idx+1)%allKana.length;renderFlash()}
+function prevCard(){fc.idx=(fc.idx-1+allKana.length)%allKana.length;renderFlash()}
+function resetCards(){fc.idx=0;buildOrder();renderFlash()}
+function toggleReveal(){fc.vc=!fc.vc;fc.vr=!fc.vr;document.getElementById('vc').classList.toggle('on',fc.vc);document.getElementById('vr').classList.toggle('on',fc.vr);renderFlash()}
+function toggleVis(w){if(w==='c'){fc.vc=!fc.vc;document.getElementById('vc').classList.toggle('on',fc.vc)}else{fc.vr=!fc.vr;document.getElementById('vr').classList.toggle('on',fc.vr)}renderFlash()}
+function setMode(m){fc.mode=m;document.getElementById('ms').classList.toggle('active',m==='seq');document.getElementById('mr').classList.toggle('active',m==='rand');fc.idx=0;buildOrder();renderFlash()}
+function toggleAuto(){
+  fc.auto=!fc.auto;var btn=document.getElementById('ab');
+  if(fc.auto){btn.textContent='⏸ 일시정지';btn.style.background='#1a1a00';btn.style.borderColor='#ff0';btn.style.color='#ff0';btn.style.textShadow='0 0 6px #ff0';fc.timer=setInterval(nextCard,2000);}
+  else{btn.textContent='▶ 자동';btn.style.background='#001a00';btn.style.borderColor='#0f0';btn.style.color='#0f0';btn.style.textShadow='0 0 6px #0f0';clearInterval(fc.timer);}
+}
+
+// ===== 목록 =====
+var listRom=true;
+function buildList(){
+  var c=document.getElementById('klc');c.innerHTML='';
+  KANA_DATA.forEach(function(g){
+    var s=document.createElement('div');s.className='gsec';
+    s.innerHTML='<div class="gsec-title">'+g.g+'</div>';
+    var grid=document.createElement('div');grid.className='kana-grid';
+    g.i.forEach(function(item){
+      var idx=allKana.findIndex(function(k){return k.k===item.k});
+      var col=COLORS[idx%COLORS.length];
+      var cell=document.createElement('div');
+      cell.className='kana-cell'+(listRom?'':' rh');
+      cell.innerHTML='<span class="ch" style="color:'+col+';text-shadow:0 0 8px '+col+'">'+item.k+'</span><span class="ro">'+item.r+'</span>';
+      (function(ci){cell.onclick=function(){var oi=fc.order.indexOf(ci);if(oi<0)oi=0;fc.idx=oi;switchTab(0);renderFlash()}})(idx);
+      grid.appendChild(cell);
+    });
+    s.appendChild(grid);c.appendChild(s);
+  });
+}
+function toggleListRom(){listRom=!listRom;document.getElementById('lrb').classList.toggle('on',listRom);document.querySelectorAll('.kana-cell').forEach(function(c){c.classList.toggle('rh',!listRom)})}
+function hlRandom(){var cells=document.querySelectorAll('.kana-cell');cells.forEach(function(c){c.style.border='1px solid #222';c.style.boxShadow=''});var p=Math.floor(Math.random()*cells.length);cells[p].style.border='2px solid #ff0';cells[p].style.boxShadow='0 0 12px #ff0';cells[p].scrollIntoView({behavior:'smooth',block:'center'})}
+
+// ===== 단어 플래시카드 =====
+var ws={
+  theme:'음식',idx:0,order:[],auto:false,timer:null,
+  hideKana:false,hideRomaji:false,hideEnglish:false,hideMeaning:false
+};
+
+function syncWordHideBtns(){
+  document.getElementById('hb0').classList.toggle('on',ws.hideKana);
+  document.getElementById('hb1').classList.toggle('on',ws.hideRomaji);
+  document.getElementById('hb2').classList.toggle('on',ws.hideEnglish);
+  document.getElementById('hb3').classList.toggle('on',ws.hideMeaning);
+}
+function toggleWordHide(type){
+  if(type==='kana') ws.hideKana=!ws.hideKana;
+  else if(type==='romaji') ws.hideRomaji=!ws.hideRomaji;
+  else if(type==='english') ws.hideEnglish=!ws.hideEnglish;
+  else if(type==='meaning') ws.hideMeaning=!ws.hideMeaning;
+  syncWordHideBtns();
+  renderWord();
+}
+function resetWordHide(){
+  ws.hideKana=false;
+  ws.hideRomaji=false;
+  ws.hideEnglish=false;
+  ws.hideMeaning=false;
+  syncWordHideBtns();
+}
+
+function buildThemeBtns(){
+  var c=document.getElementById('tscroll');c.innerHTML='';
+  Object.keys(THEMES).forEach(function(key){
+    var t=THEMES[key];
+    var btn=document.createElement('button');
+    btn.className='theme-btn'+(key===ws.theme?' active':'');
+    btn.textContent=t.label;
+    btn.style.borderColor=key===ws.theme?t.color:'#333';
+    btn.style.color=key===ws.theme?t.color:'#888';
+    (function(k){btn.onclick=function(){selectTheme(k)}})(key);
+    c.appendChild(btn);
+  });
+}
+function selectTheme(key){
+  ws.theme=key;
+  var btns=document.querySelectorAll('.theme-btn');
+  var keys=Object.keys(THEMES);
+  btns.forEach(function(btn,i){
+    var k=keys[i],t=THEMES[k],active=k===key;
+    btn.classList.toggle('active',active);
+    btn.style.borderColor=active?t.color:'#333';
+    btn.style.color=active?t.color:'#888';
+    btn.style.background=active?'#0a0a0a':'#111';
+  });
+  reshuffleWords();
+}
+function getThemeWords(theme){
+  var filtered=THEMES[theme].words.filter(function(w){return w.k.indexOf('ー')===-1});
+  return filtered.length?filtered:THEMES[theme].words.slice();
+}
+function reshuffleWords(){
+  ws.order=getThemeWords(ws.theme).slice().sort(function(){return Math.random()-0.5});
+  ws.idx=0;resetWordHide();renderWord();
+}
+function resetWords(){ws.idx=0;resetWordHide();renderWord()}
+function wNext(){ws.idx=(ws.idx+1)%ws.order.length;renderWord()}
+function wPrev(){ws.idx=(ws.idx-1+ws.order.length)%ws.order.length;renderWord()}
+function toggleWordAuto(){
+  ws.auto=!ws.auto;var btn=document.getElementById('wab');
+  if(ws.auto){
+    btn.textContent='⏸ 일시정지';btn.style.background='#1a1a00';btn.style.borderColor='#ff0';btn.style.color='#ff0';btn.style.textShadow='0 0 6px #ff0';
+    ws.timer=setInterval(function(){wNext()},2500);
+  }else{
+    btn.textContent='▶ 자동';btn.style.background='#001a00';btn.style.borderColor='#0f0';btn.style.color='#0f0';btn.style.textShadow='0 0 6px #0f0';
+    clearInterval(ws.timer);
+  }
+}
+
+function renderWord(){
+  var w=ws.order[ws.idx];
+  var tc=THEMES[ws.theme].color;
+
+  // 기본값: 모든 버튼이 꺼져 있으면 전체 공개
+  // 버튼을 켜면 숨김 항목이 누적됨
+  var showK = !ws.hideKana;
+  var showR = !ws.hideRomaji;
+  var showO = !ws.hideEnglish;
+  var showM = !ws.hideMeaning;
+
+  document.getElementById('wftheme').textContent=THEMES[ws.theme].label;
+  document.getElementById('wfidx').textContent=(ws.idx+1)+'/'+ws.order.length;
+  document.getElementById('wfill').style.width=Math.round((ws.idx+1)/ws.order.length*100)+'%';
+  document.getElementById('wfill').style.background=tc;
+  document.getElementById('wfill').style.boxShadow='0 0 6px '+tc;
+
+  var kEl=document.getElementById('wfkana');
+  var rEl=document.getElementById('wfrom');
+  var oEl=document.getElementById('wfeng');
+  var mEl=document.getElementById('wfmean');
+
+  kEl.textContent=w.k;
+  if(showK){kEl.style.color=tc;kEl.style.textShadow='0 0 12px '+tc;kEl.style.background='transparent';kEl.style.padding='0';}
+  else{kEl.style.color='transparent';kEl.style.textShadow='none';kEl.style.background='#1a1a1a';kEl.style.padding='6px 40px';}
+
+  rEl.textContent=w.r;
+  if(showR){rEl.style.color='#666';rEl.style.background='transparent';rEl.style.padding='0';}
+  else{rEl.style.color='transparent';rEl.style.background='#1a1a1a';rEl.style.padding='3px 28px';}
+
+  oEl.textContent='← '+w.o;
+  if(showO){oEl.style.color='#444';oEl.style.background='transparent';oEl.style.padding='0';}
+  else{oEl.style.color='transparent';oEl.style.background='#1a1a1a';oEl.style.padding='3px 24px';}
+
+  mEl.textContent=w.m;
+  if(showM){mEl.style.color='#ddd';mEl.style.background='transparent';mEl.style.padding='0';}
+  else{mEl.style.color='transparent';mEl.style.background='#1a1a1a';mEl.style.padding='4px 32px';}
+}
+
+// ===== 탭 전환 =====
+function switchTab(n){
+  for(var i=0;i<3;i++){
+    document.getElementById('tab'+i).style.display=i===n?'block':'none';
+    document.getElementById('tb'+i).classList.toggle('active',i===n);
+  }
+  if(n===1)buildList();
+}
+
+buildOrder();renderFlash();
+buildThemeBtns();reshuffleWords();
+</script>
+</body>
+</html>
