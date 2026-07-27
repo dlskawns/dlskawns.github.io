@@ -1,20 +1,18 @@
 ---
-
 title: 'Deep Learning - 딥러닝 이론 정리 5 (optimizer 정리)'
 
-categories: ['Data Science', 'Deep Learning']
+categories: ["deep-learning"]
 
-tags: 
-- 딥러닝
+tags:
+  - "옵티마이저"
+  - "개념정리"
 
 use_math: true
 
 toc: true
-toc_label: "My Table of Contents"
-toc_icon: "cog"
-
+toc_label: "목차"
+toc_icon: "list"
 ---
-
 ## 옵티마이저 (Optimizer)
 ---
 신경망 모델을 최적화 하는데 필요한 파라미터.

@@ -1,0 +1,10 @@
+# 카테고리 슬러그 -> 화면 표시 이름
+# 슬러그를 카테고리 값으로 쓰는 이유: Jekyll의 :categories permalink는 slugify가 아니라
+# 단순 downcase만 하므로, 공백이 들어간 이름을 쓰면 URL에 %20이 박힌다.
+machine-learning: "Machine Learning"
+deep-learning: "Deep Learning"
+nlp-llm: "NLP & LLM"
+paper-review: "Paper Review"
+mlops: "MLOps & Engineering"
+python-data: "Python & Data"
+retrospective: "Retrospective"
