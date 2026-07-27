@@ -6,6 +6,8 @@ main:
     url: /category/deep-learning/
   - title: "NLP & LLM"
     url: /category/nlp-llm/
+  - title: "Optimization"
+    url: /category/optimization/
   - title: "Paper Review"
     url: /category/paper-review/
   - title: "MLOps"

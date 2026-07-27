@@ -3,6 +3,7 @@
 # 단순 downcase만 하므로, 공백이 들어간 이름을 쓰면 URL에 %20이 박힌다.
 machine-learning: "Machine Learning"
 deep-learning: "Deep Learning"
+optimization: "Optimization & OR"
 nlp-llm: "NLP & LLM"
 paper-review: "Paper Review"
 mlops: "MLOps & Engineering"
