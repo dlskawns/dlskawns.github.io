@@ -7,13 +7,19 @@ layout: archive
   style="text-align: center; background-image:url(/assets/img/namsan.jpg); background-size: cover;">
 </div> -->
 
-<div class="col-lg-4 col-md-2">
-  <ul>
-  {% for category in site.categories %}
-    <li><a href="/category/{{ category | first }}">{{ category | first}} ({{ category | last | size}})</a></li>
+<ul class="taxonomy__index">
+  {% for item in site.pages %}
+    {% if item.taxonomy %}
+      {% assign cat_key = item.taxonomy %}
+      <li>
+        <a href="{{ item.url | relative_url }}">
+          <strong>{{ site.data.category_names[cat_key] | default: cat_key }}</strong>
+          <span class="taxonomy__count">{{ site.categories[cat_key] | size }}</span>
+        </a>
+      </li>
+    {% endif %}
   {% endfor %}
-  </ul>
-</div>
+</ul>
 
 
 <h3 class="archive__subtitle">{{ site.data.ui-text[site.locale].recent_posts | default: "Recent Posts" }}</h3>

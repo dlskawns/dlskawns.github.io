@@ -19,10 +19,11 @@ layout: archive
 <ul class="taxonomy__index">
   {% for item in site.pages %}
     {% if item.taxonomy %}
+      {% assign cat_key = item.taxonomy %}
       <li>
         <a href="{{ item.url | relative_url }}">
-          <strong>{{ site.data.category_names[item.taxonomy] | default: item.taxonomy }}</strong>
-          <span class="taxonomy__count">{{ site.categories[item.taxonomy] | size }}</span>
+          <strong>{{ site.data.category_names[cat_key] | default: cat_key }}</strong>
+          <span class="taxonomy__count">{{ site.categories[cat_key] | size }}</span>
         </a>
       </li>
     {% endif %}

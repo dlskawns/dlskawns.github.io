@@ -15,9 +15,10 @@ layout: archive
   {% for i in (1..categories_max) reversed %}
     {% for category in site.categories %}
       {% if category[1].size == i %}
+        {% assign cat_key = category[0] %}
         <li>
-          <a href="#{{ category[0] | slugify }}">
-            <strong>{{ site.data.category_names[category[0]] | default: category[0] }}</strong> <span class="taxonomy__count">{{ i }}</span>
+          <a href="#{{ cat_key | slugify }}">
+            <strong>{{ site.data.category_names[cat_key] | default: cat_key }}</strong> <span class="taxonomy__count">{{ i }}</span>
           </a>
         </li>
       {% endif %}
@@ -29,8 +30,9 @@ layout: archive
 {% for i in (1..categories_max) reversed %}
   {% for category in site.categories %}
     {% if category[1].size == i %}
-      <section id="{{ category[0] | slugify | downcase }}" class="taxonomy__section">
-        <h2 class="archive__subtitle">{{ site.data.category_names[category[0]] | default: category[0] }}</h2>
+      {% assign cat_key = category[0] %}
+      <section id="{{ cat_key | slugify | downcase }}" class="taxonomy__section">
+        <h2 class="archive__subtitle">{{ site.data.category_names[cat_key] | default: cat_key }}</h2>
         <div class="entries-{{ entries_layout }}">
           {% for post in category.last %}
             {% include archive-single.html type=entries_layout %}
