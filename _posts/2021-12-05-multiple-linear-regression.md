@@ -1,6 +1,8 @@
 ---
 title: 'Linear Regression - 다중선형회귀 정리, 기준모델, 다중모델 작성 및 시각화해보기'
 
+date: 2021-12-05 19:04:10 +0900
+
 categories: ["machine-learning"]
 
 tags:

@@ -1,6 +1,8 @@
 ---
 title: 'Machine Learning - RandomizedSearchCV, GridSearchCV 정리, 실습, 최적의 하이퍼 파라미터 구하기(Optimal hyper parameters)'
 
+date: 2022-01-22 11:23:10 +0900
+
 categories: ["machine-learning"]
 
 tags:

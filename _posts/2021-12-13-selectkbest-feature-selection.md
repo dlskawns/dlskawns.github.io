@@ -1,6 +1,8 @@
 ---
 title: 'Machine learning -  SelectKBest 정리, 특성공학, 최적의 특성 수를 구하기'
 
+date: 2021-12-13 23:15:48 +0900
+
 categories: ["machine-learning"]
 
 tags:

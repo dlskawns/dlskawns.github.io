@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - NLP 자연어처리 정리 1(벡터화, 전처리)'
 
+date: 2022-02-18 13:12:29 +0900
+
 categories: ["nlp-llm"]
 
 tags:

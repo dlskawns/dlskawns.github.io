@@ -1,6 +1,8 @@
 ---
 title: 'Machine Learning - Decision tree 결정 트리 정리, 모델 작성, 지니 불순도와 엔트로피 이론'
 
+date: 2021-12-13 23:22:35 +0900
+
 categories: ["machine-learning"]
 
 tags:

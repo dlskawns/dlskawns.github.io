@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - tf.Keras를 이용한 간단한 신경망 작성 실습 ( Fashion Mnist data)'
 
+date: 2022-02-11 12:49:39 +0900
+
 categories: ["deep-learning"]
 
 tags:

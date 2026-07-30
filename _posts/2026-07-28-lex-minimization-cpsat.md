@@ -1,6 +1,8 @@
 ---
 title: 'Optimization - 같은 입력인데 결과가 매번 다른 문제, lex(사전식) 최소화로 잡기 (feat. CP-SAT, 가중치 절벽)'
 
+date: 2026-07-28 00:09:05 +0900
+
 categories: ["optimization"]
 
 tags:
@@ -14,6 +16,9 @@ use_math: true
 toc: true
 toc_label: "목차"
 toc_icon: "list"
+
+header:
+  og_image: /assets/images/2026-07-28-lex-minimization/01-seed-variance.png
 ---
 제약 최적화 문제를 CP-SAT로 풀다가, 같은 입력을 넣었는데 실행할 때마다 결과가 달라지는 상황을 마주쳤다.  
 하드 제약은 다 지켜지고 목적함수 값도 똑같은데, 정작 사람이 체감하는 "공평함"이 매번 달랐다.  

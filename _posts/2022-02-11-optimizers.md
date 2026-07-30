@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 딥러닝 이론 정리 5 (optimizer 정리)'
 
+date: 2022-02-11 11:00:13 +0900
+
 categories: ["deep-learning"]
 
 tags:

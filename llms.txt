@@ -1,0 +1,39 @@
+---
+layout: null
+permalink: /llms.txt
+sitemap: false
+---
+# {{ site.title }}
+
+> {{ site.description }}
+
+저자: {{ site.social.name | default: site.author.name }} ({{ site.social.links | first }})
+사이트: {{ site.url }}
+언어: 한국어
+
+## 이 블로그의 성격
+
+DS/AI 엔지니어가 공부하고 실험한 내용을 정리하는 기술 블로그입니다.
+각 글은 다음 원칙으로 작성됩니다.
+
+- 주장은 직접 실행한 측정으로 뒷받침합니다. 실험 스크립트를 함께 공개해 재현할 수 있게 합니다.
+- 실패하거나 되돌린 시도를 지우지 않고 그대로 기록합니다.
+- 표본 수 부족, 미검증 항목 등 한계를 글 안에 명시합니다.
+
+## 카테고리
+{% for item in site.pages %}{% if item.taxonomy %}
+- {{ site.data.category_names[item.taxonomy] | default: item.taxonomy }}: {{ site.url }}{{ item.url }}{% endif %}{% endfor %}
+
+## 전체 글 목록
+{% for post in site.posts %}
+- [{{ post.date | date: "%Y-%m-%d" }}] {{ post.title }}
+  {{ site.url }}{{ post.url }}{% if post.tags %}
+  태그: {{ post.tags | join: ", " }}{% endif %}
+{% endfor %}
+
+## 더 보기
+
+- 전체 색인: {{ site.url }}/sitemap.xml
+- RSS: {{ site.url }}/feed.xml
+- 카테고리 목록: {{ site.url }}/categories/
+- 태그 목록: {{ site.url }}/tags/

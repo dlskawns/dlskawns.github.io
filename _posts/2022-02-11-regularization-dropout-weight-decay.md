@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 딥러닝 이론 정리 4 규제, 일반화 관련 이론 정리(Weight Decay, Dropout, Weigth Constraint, EarlyStopping)'
 
+date: 2022-02-11 12:12:36 +0900
+
 categories: ["deep-learning"]
 
 tags:

@@ -1,6 +1,8 @@
 ---
 title: 'Logistic Regression - 로지스틱 회귀, lodge 정리'
 
+date: 2021-12-13 23:13:25 +0900
+
 categories: ["machine-learning"]
 
 tags:

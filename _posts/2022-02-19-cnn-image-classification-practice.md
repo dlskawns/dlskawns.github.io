@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 이미지 처리 CNN 이용한 이미지 분류 모델 구현 실습'
 
+date: 2022-02-19 19:30:29 +0900
+
 categories: ["deep-learning"]
 
 tags:

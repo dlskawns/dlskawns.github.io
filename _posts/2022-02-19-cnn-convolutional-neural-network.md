@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - CNN (Convolutional Neural Network) 정리'
 
+date: 2022-02-19 19:25:32 +0900
+
 categories: ["deep-learning"]
 
 tags:

@@ -1,6 +1,8 @@
 ---
 title: "깃헙으로 옮기기 시작"
 
+date: 2021-11-30 21:51:31 +0900
+
 categories: ["retrospective"]
 
 tags:

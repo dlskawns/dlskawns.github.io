@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 딥러닝 이론 정리 1 (퍼셉트론 구조, 연산, 가중치와 편향, 활성화 함수)'
 
+date: 2022-01-28 05:45:55 +0900
+
 categories: ["deep-learning"]
 
 tags:

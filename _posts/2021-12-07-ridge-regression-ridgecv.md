@@ -1,6 +1,8 @@
 ---
 title: 'Ridge Regression - RidgeCV 정리 및 구현'
 
+date: 2021-12-07 22:55:14 +0900
+
 categories: ["machine-learning"]
 
 tags:

@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 이미지 처리 전이학습(Transfer Learning) 이용한 이미지 분류 모델 구현 실습'
 
+date: 2022-02-20 18:36:38 +0900
+
 categories: ["deep-learning"]
 
 tags:

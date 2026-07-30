@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 딥러닝 이론 정리 2 (역전파, 체인룰, 가중치 업데이트, 경사하강법)'
 
+date: 2022-01-28 05:52:29 +0900
+
 categories: ["deep-learning"]
 
 tags:

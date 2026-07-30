@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 딥러닝 이론 정리 6 하이퍼 파라미터(with early stopping)'
 
+date: 2022-02-18 12:42:37 +0900
+
 categories: ["deep-learning"]
 
 tags:

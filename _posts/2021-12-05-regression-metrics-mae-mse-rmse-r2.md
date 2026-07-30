@@ -1,6 +1,8 @@
 ---
 title: 'Linear Regression - 회귀문제의 평가 지표, MAE, MSE, RMSE, R Squared 정리'
 
+date: 2021-12-05 19:06:22 +0900
+
 categories: ["machine-learning"]
 
 tags:

@@ -1,6 +1,8 @@
 ---
 title: 'Feature Engineering - 범주형 feature에 대한 처리 Encoders(OneHotEncoder / OrdinalEncoder)'
 
+date: 2021-12-07 23:28:42 +0900
+
 categories: ["machine-learning"]
 
 tags:

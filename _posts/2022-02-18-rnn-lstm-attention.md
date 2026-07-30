@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - NLP 자연어처리 정리 2(RNN, LSTM, 순환신경망, Attention)'
 
+date: 2022-02-18 15:35:55 +0900
+
 categories: ["nlp-llm"]
 
 tags:

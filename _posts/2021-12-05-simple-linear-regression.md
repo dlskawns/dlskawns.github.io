@@ -1,6 +1,8 @@
 ---
 title: 'Linear Regression - 단순선형회귀 정리, 회귀계수와 절편 구하기'
 
+date: 2021-12-05 18:56:07 +0900
+
 categories: ["machine-learning"]
 
 tags:

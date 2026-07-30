@@ -1,6 +1,8 @@
 ---
 title: 'Machine Learning - Target 분포 불균형 / unbalanced class의 문제 해결하기'
 
+date: 2022-01-25 23:35:44 +0900
+
 categories: ["machine-learning"]
 
 tags:

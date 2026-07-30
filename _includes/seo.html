@@ -121,6 +121,38 @@
   <link rel="next" href="{{ paginator.next_page_path | absolute_url }}">
 {% endif %}
 
+{% comment %}
+  글 페이지에는 BlogPosting 구조화 데이터를 붙인다.
+  검색엔진과 생성형 엔진이 제목·게시일·수정일·저자·본문을 기계적으로 읽을 수 있게 한다.
+{% endcomment %}
+{% if page.layout == "single" and page.date %}
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "mainEntityOfPage": { "@type": "WebPage", "@id": {{ canonical_url | jsonify }} },
+    "url": {{ canonical_url | jsonify }},
+    "headline": {{ page.title | markdownify | strip_html | strip_newlines | jsonify }},
+    "description": {{ seo_description | jsonify }},
+    "inLanguage": {{ site.locale | default: "ko-KR" | jsonify }},
+    "datePublished": {{ page.date | date_to_xmlschema | jsonify }},
+    "dateModified": {{ page.last_modified_at | default: page.date | date_to_xmlschema | jsonify }},
+    {% if page_large_image or page_teaser_image %}"image": {{ page_large_image | default: page_teaser_image | jsonify }},{% endif %}
+    {% if page.categories %}"articleSection": {{ page.categories | jsonify }},{% endif %}
+    {% if page.tags %}"keywords": {{ page.tags | join: ", " | jsonify }},{% endif %}
+    "author": {
+      "@type": "Person",
+      "name": {{ site.social.name | default: site.author.name | default: site.name | jsonify }}{% if site.social.links %},
+      "sameAs": {{ site.social.links | jsonify }}{% endif %}
+    },
+    "publisher": {
+      "@type": "Person",
+      "name": {{ site.social.name | default: site.author.name | default: site.name | jsonify }}
+    }
+  }
+</script>
+{% endif %}
+
 <script type="application/ld+json">
   {
     "@context": "https://schema.org",

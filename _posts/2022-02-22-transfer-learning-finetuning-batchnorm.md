@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 전이학습(Transfer Learning)의 미세조정(Fine Tuning) 방법 및 학습이 안되는 원인분석 (feat. BN, ResNet50)'
 
+date: 2022-02-22 22:00:58 +0900
+
 categories: ["deep-learning"]
 
 tags:

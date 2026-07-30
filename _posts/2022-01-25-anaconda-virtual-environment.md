@@ -1,6 +1,8 @@
 ---
 title: 'Data Engineering - ANACONDA를 이용한 가상환경 생성 / 제거 / 활성화 방법 및 가상환경 이론 정리'
 
+date: 2022-01-25 23:41:10 +0900
+
 categories: ["mlops"]
 
 tags:

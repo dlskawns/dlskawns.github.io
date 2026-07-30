@@ -1,6 +1,8 @@
 ---
 title: 'Dataframe 내 특정Column, row의 선택, 조건부 선택, 변경하기'
 
+date: 2021-12-02 23:59:58 +0900
+
 categories: ["python-data"]
 
 tags:

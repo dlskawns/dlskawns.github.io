@@ -1,6 +1,8 @@
 ---
 title: 'Deep Learning - 딥러닝 이론 정리 3 (손실함수)'
 
+date: 2022-01-28 05:48:25 +0900
+
 categories: ["deep-learning"]
 
 tags:

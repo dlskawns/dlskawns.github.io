@@ -1,6 +1,8 @@
 ---
 title: 'Machine Learning - Random Forest 정리, 구성원리 파악 및 모델 작성'
 
+date: 2022-01-22 11:17:38 +0900
+
 categories: ["machine-learning"]
 
 tags:
