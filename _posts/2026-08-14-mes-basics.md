@@ -2,7 +2,7 @@
 title: 'Optimization - 의료 밖의 도메인을 찾다가 MES를 공부하게 됐다 (feat. ERP/MES 경계, LOT 상태 모델링)'
 
 date: 2026-08-14 20:20:00 +0900
-last_modified_at: 2026-08-21 11:30:00 +0900
+last_modified_at: 2026-08-21 11:27:00 +0900
 
 categories: ["optimization"]
 
