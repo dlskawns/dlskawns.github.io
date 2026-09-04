@@ -45,11 +45,11 @@ fig, ax = plt.subplots(figsize=(10.4, 5.8))
 ax.set_xlim(0, 10); ax.set_ylim(0, 5.6); ax.axis("off")
 rows = [
     (4.10, "ERP  (Level 4)", "무엇을 얼마나 언제까지 만들 것인가", BLUE,
-     "Product · CustomerOrder · ProductionOrder · BOM · 납기"),
+     "Product, CustomerOrder, ProductionOrder, BOM, 납기"),
     (2.45, "MES  (Level 3)", "지금 그것이 어디서 어떤 상태로 만들어지고 있는가", ORANGE,
-     "Lot · Route · Operation · Equipment · WIP · Dispatch · Trace"),
+     "Lot, Route, Operation, Equipment, WIP, Dispatch, Trace"),
     (0.80, "SCADA / PLC  (Level 0~2)", "실제로 기계를 움직인다", AQUA,
-     "센서 · 액추에이터 · 물리 공정"),
+     "센서, 액추에이터, 물리 공정"),
 ]
 for y, title, q, col, ents in rows:
     box(ax, .6, y, 8.8, 1.15, col, col)
@@ -59,7 +59,7 @@ for y, title, q, col, ents in rows:
 for y in (4.10, 2.45):
     arrow(ax, (5.0, y), (5.0, y - .48))
 ax.text(5.25, 3.84, "생산지시 ↓", fontsize=11, color=MUTED)
-ax.text(5.25, 2.19, "실적 · 설비상태 ↑", fontsize=11, color=MUTED)
+ax.text(5.25, 2.19, "실적과 설비상태 ↑", fontsize=11, color=MUTED)
 ax.set_title("ERP는 계획을 내리고, MES는 그 계획이 현장에서 실행되는 과정을 붙든다",
              fontsize=14.5, pad=16)
 fig.savefig(f"{OUT}/01-layers.png", **SAVE)

@@ -8,8 +8,8 @@
   title_df  제목에 그 단어가 든 문서 수로 판정          <- 최종 채택
 
 실제 조건 두 가지를 그대로 옮겼다.
-  · 제목매칭 문서는 매칭 수, 그다음 최신순으로 올린다
-  · 의미검색 근사는 토픽어 중심이라 고유명사에 점수를 거의 주지 않는다
+  - 제목매칭 문서는 매칭 수, 그다음 최신순으로 올린다
+  - 의미검색 근사는 토픽어 중심이라 고유명사에 점수를 거의 주지 않는다
 """
 import re, collections, random
 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     for q, gold in QUERIES:
         gi = next((i for i,(t,_,_) in enumerate(DOCS) if t == gold), None)
         if gi is None: continue
-        print(f'\n질의 "{q}"   정답 「{gold}」')
+        print(f'\n질의 "{q}"   정답 "{gold}"')
         for rule in ["none", "df", "title_df"]:
             order, terms, npro = rank(q, rule)
             print("   %-9s 정답 %2d위   승격 %2d건   구별어=%s"

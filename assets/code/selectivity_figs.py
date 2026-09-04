@@ -37,7 +37,7 @@ for ax, key, title, thr, thrlab in [
     ax.set_title(title, fontsize=13, pad=10)
 axes[0].set_ylabel("문서 수")
 h=[plt.Rectangle((0,0),1,1,color=col[k]) for k in ["구조어","토픽어","구별어"]]
-fig.legend(h,["구조어 (보고서·지침…)","토픽어 (안전·품질…)","구별어 (시스템명)"],
+fig.legend(h,["구조어 (보고서, 지침…)","토픽어 (안전, 품질…)","구별어 (시스템명)"],
            loc="lower center", ncol=3, frameon=False, fontsize=11)
 fig.suptitle("df 로 재면 구조어가 토픽어보다 희귀해 보인다 — 선택도 판정이 뒤집힌다", fontsize=14.5)
 fig.tight_layout(rect=[0,0.07,1,0.92])

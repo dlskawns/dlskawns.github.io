@@ -117,7 +117,7 @@ summary { cursor:pointer; color:var(--accent); }
 <main>
 <h1 id="intro">TAAC 2026 / UNI-REC — EDA & 통합 백본 전략</h1>
 <div class="meta">
-  <span class="pill">대회: KDD Cup 2026 · Tencent UNI-REC Challenge</span>
+  <span class="pill">대회: KDD Cup 2026 | Tencent UNI-REC Challenge</span>
   <span class="pill">데이터: TAAC2026/data_sample_1000</span>
   <span class="pill">생성: 2026-04-16</span>
 </div>
@@ -140,9 +140,9 @@ reading list가 <em>OneTrans / InterFormer / HyFormer</em> 셋이라는 점이 �
 their correlations with stackable, unified blocks.”
 </blockquote>
 <ul>
-  <li><strong>대회</strong>: KDD Cup 2026 · Tencent UNI-REC Challenge (algo.qq.com).</li>
+  <li><strong>대회</strong>: KDD Cup 2026 | Tencent UNI-REC Challenge (algo.qq.com).</li>
   <li><strong>플랫폼</strong>: AngelML (주최측 학습/평가 리소스 제공 예정).</li>
-  <li><strong>데이터셋</strong>: privacy-preserving, de-identified industrial-scale dataset (Round 1·2 단계 공개).</li>
+  <li><strong>데이터셋</strong>: privacy-preserving, de-identified industrial-scale dataset (Round 1과 2 단계 공개).</li>
   <li><strong>핵심 차별점</strong>: 시퀀스(behavior history)와 비-시퀀스(multi-field user/item/context features)를 <em>분리된 모듈</em>로 두지 말고 한 backbone으로 통합. unified tokenization이 사실상 강제된다.</li>
 </ul>
 
@@ -291,7 +291,7 @@ timestamp-aware <em>interleaving merge</em> 적용.</div></div>
 <div class="impl">→ 시퀀스 그대로 입력 가능. 모델은 <em>일반화</em>가 핵심.</div></div>
 
 <div class="finding"><h4>7) (id, weight) 정렬 페어 발견 (fids 62, 63, 64, 65, 66, 89, 90, 91)</h4>
-<div class="impl">→ NS-token으로 변환할 때 <code>pool(fid) = Σ softmax(weight)_k · Emb(id_k)</code>로
+<div class="impl">→ NS-token으로 변환할 때 <code>pool(fid) = Σ softmax(weight)_k × Emb(id_k)</code>로
 가중합. CAN(WSDM 2022) 스타일.</div></div>
 
 <div class="finding"><h4>8) 도메인 내 길이 일관성 100% (튜플 시퀀스)</h4>
@@ -328,10 +328,10 @@ sequence/feature 균형 검증은 <strong>HyFormer</strong>의 ablation 프로�
     Lₙₛ개 토큰으로 split) 이 manual grouping보다 우수.</li>
   <li><strong>Mixed Causal Attention</strong>: S-token은 자신의 과거 S-token만 본다 (autoregressive).
     NS-token은 <em>전체 S history + 자신 이전의 NS</em>를 모두 본다 (target attention 수렴).</li>
-  <li><strong>Mixed parameterization</strong>: S-token은 layer 전체에 Q/K/V·FFN 공유. NS-token은
+  <li><strong>Mixed parameterization</strong>: S-token은 layer 전체에 Q/K/V와 FFN 공유. NS-token은
     <em>token-specific</em> 파라미터. (전부 공유했을 때보다 +0.15% UAUC.)</li>
   <li><strong>Pyramid query pruning</strong>: 깊이가 깊어질수록 query 토큰 수를 점차 줄여 (OneTransS: 1190→12, OneTransL: 1500→16),
-    O(L·L′·d) attention으로 비용 감소.</li>
+    O(L × L′ × d) attention으로 비용 감소.</li>
   <li><strong>RMSNorm pre-norm</strong>: token 종류별 통계 차이로 인한 attention collapse 방지.</li>
   <li><strong>Loss</strong>: CTR/CVR head — <code>P(click=1|NS, S; Θ)</code>, <code>P(conv=1|click=1, NS, S; Θ)</code>.
     AUC와 UAUC로 평가.</li>

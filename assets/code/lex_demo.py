@@ -105,7 +105,7 @@ if __name__ == "__main__":
         "lex 2-pass":   lex,
     }
     out = defaultdict(list)
-    print("== 실험 1·2: 시드 10회 반복 ==")
+    print("== 실험 1과 2: 시드 10회 반복 ==")
     for name, fn in modes.items():
         for sd in seeds:
             r = fn(sd)

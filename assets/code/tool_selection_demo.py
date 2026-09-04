@@ -173,12 +173,12 @@ def run(mode, levels, trials, queries):
 
 if __name__ == "__main__":
     if "--pilot" in sys.argv:
-        print(f"파일럿: {MODEL} · 도구풀 {len(DISTRACTORS)+len(TARGETS)}개")
+        print(f"파일럿: {MODEL} | 도구풀 {len(DISTRACTORS)+len(TARGETS)}개")
         run("full", [20, 300], 1, QUERIES)
         sys.exit(0)
 
     res = []
-    print(f"모델 {MODEL} · 도구풀 {len(DISTRACTORS)+len(TARGETS)}개 · 질의 {len(QUERIES)}종")
+    print(f"모델 {MODEL} | 도구풀 {len(DISTRACTORS)+len(TARGETS)}개 | 질의 {len(QUERIES)}종")
     print("=== 조건 A: N개를 전부 프롬프트에 ===")
     res += run("full", LEVELS, TRIALS, QUERIES)
     print(f"=== 조건 B: BM25 top-{TOPK} 로 추린 뒤 ===")

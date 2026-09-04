@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """글 문체 검사기 — 발행 전에 반드시 통과시킨다.
 
-    python3 scripts/check_style.py                 # _posts 전체
+    python3 scripts/check_style.py                 # _posts 전체 + 레포 전역 금지문자
     python3 scripts/check_style.py _posts/x.md     # 특정 글
 
 기준은 기존 글에서 뽑은 것이다. 자세한 배경은 _drafts/_TEMPLATE.md 참조.
@@ -34,11 +34,10 @@ def check(path):
     fails, warns = [], []
 
     # ── 금지 문자 ────────────────────────────────────────────────
-    if "·" in b:
-        fails.append(f"가운뎃점(·) {b.count('·')}개 — 나열은 쉼표, 이질적 구분은 파이프(|)")
-    jp = b.count("「") + b.count("」")
-    if jp:
-        fails.append(f"일본식 괄호(「 」) {jp}개 — 큰따옴표나 백틱을 쓴다")
+    for ch, name in BANNED.items():
+        if ch in b:
+            fails.append(f"{name}(U+{ord(ch):04X}) {b.count(ch)}개 — "
+                         "나열은 쉼표, 이질적 구분은 파이프, 인용은 큰따옴표")
 
     # ── 문체 ────────────────────────────────────────────────────
     bold_all = re.findall(r"\*\*[^*]+\*\*", b)
@@ -87,6 +86,36 @@ def check(path):
     return fails, warns
 
 
+BANNED = {"\u00b7": "가운뎃점", "\u300c": "일본식 여는 낫표", "\u300d": "일본식 닫는 낫표",
+          "\u300e": "겹낫표", "\u300f": "겹낫표", "\uff62": "반각 낫표", "\uff63": "반각 낫표"}
+SCAN_DIRS = ["_posts", "_pages", "_includes", "_layouts", "_data", "_drafts",
+             "assets/code", "taac"]
+SCAN_ROOT = ["_config.yml", "llms.txt", "index.html", "README.md"]
+SCAN_EXT = (".md", ".html", ".yml", ".py", ".txt", ".js", ".scss")
+
+
+def scan_repo():
+    """금지 문자만 레포 전역에서 훑는다. 도식 스크립트의 라벨까지 잡기 위한 것이다."""
+    files = list(SCAN_ROOT)
+    for d in SCAN_DIRS:
+        for root, _, names in os.walk(d):
+            files += [os.path.join(root, n) for n in names if n.endswith(SCAN_EXT)]
+    bad = 0
+    for f in sorted(set(files)):
+        if not os.path.isfile(f) or os.path.abspath(f) == os.path.abspath(__file__):
+            continue
+        try:
+            lines = open(f, encoding="utf-8").read().split("\n")
+        except (UnicodeDecodeError, OSError):
+            continue
+        for i, line in enumerate(lines, 1):
+            for ch, name in BANNED.items():
+                if ch in line:
+                    print(f"   FAIL  {f}:{i}  {name} — {line.strip()[:70]}")
+                    bad += 1
+    return bad
+
+
 def main():
     targets = sys.argv[1:] or sorted(glob.glob("_posts/*.md"))
     bad = 0
@@ -100,6 +129,13 @@ def main():
         for w in warns:
             print(f"   warn  {w}")
         bad += len(fails)
+
+    if not sys.argv[1:]:
+        print("\n── 레포 전역 금지 문자")
+        n = scan_repo()
+        print("   깨끗함" if not n else f"   {n}건")
+        bad += n
+
     print(f"\n검사 {len(targets)}건, 위반 {bad}건" if bad else
           f"\n검사 {len(targets)}건, 위반 없음")
     return 1 if bad else 0
